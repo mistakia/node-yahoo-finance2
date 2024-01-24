@@ -9,13 +9,13 @@ echo "---"
 
 cd dist/esm
 
-for FILE in $(find -name \*.json) ; do
+for FILE in $(find . -name \*.json) ; do
   echo "Converting \"$FILE\" to ESM module \"$FILE.js\"";
-  echo -n "export default " > $FILE.js
+  printf "export default " > $FILE.js
   cat $FILE >> $FILE.js
 done
 
-for FILE in $(find -name \*js) ; do
+for FILE in $(find . -name \*js) ; do
   # Lines that start with 'import' and end with '.json";'.
   if grep -qE '^(import .*)\.json";$' $FILE; then
     echo
@@ -31,13 +31,13 @@ echo "---"
 
 cd ../cjs
 
-for FILE in $(find -name \*.json) ; do
+for FILE in $(find . -name \*.json) ; do
   echo "Converting \"$FILE\" to ESM module \"$FILE.js\"";
-  echo -n "module.exports = " > $FILE.js
+  printf "module.exports = " > $FILE.js
   cat $FILE >> $FILE.js
 done
 
-for FILE in $(find -name \*js) ; do
+for FILE in $(find . -name \*js) ; do
   # Lines that start with 'import' and end with '.json";'.
   if grep -qE '^(const .*)\.json"\)\);$' $FILE; then
     echo
